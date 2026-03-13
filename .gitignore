@@ -1,0 +1,61 @@
+# ===============================
+
+# Resultados del pipeline
+
+# ===============================
+
+results/*
+!results/.gitkeep
+
+# ===============================
+
+# Logs
+
+# ===============================
+
+*.log
+
+# ===============================
+
+# Archivos temporales
+
+# ===============================
+
+*.tmp
+*.temp
+*.bak
+
+# ===============================
+
+# Archivos generados por editores
+
+# ===============================
+
+.vscode/
+*.swp
+*.swo
+
+# ===============================
+
+# Archivos del sistema operativo
+
+# ===============================
+
+.DS_Store
+Thumbs.db
+
+# ===============================
+
+# Archivos grandes de bioinformática
+
+# (si en algún momento generas datos grandes)
+
+# ===============================
+
+*.bam
+*.sam
+*.bai
+*.vcf
+*.fq.gz
+*.fastq.gz
+*.fasta.gz
