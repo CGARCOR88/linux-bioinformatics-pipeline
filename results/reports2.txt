@@ -1,0 +1,8 @@
+--- Reporte de Genes ---
+Archivo analizado: expresion_tratamientos.tsv
+El número total de genes únicos es: 4
+Lista de genes:
+GEN_A
+GEN_B
+GEN_C
+GEN_D
