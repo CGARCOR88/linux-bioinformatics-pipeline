@@ -1,4 +1,0 @@
-ARCHIVO     LINEAS  FECHA_PROCESO
-sec1.fasta  4       11-03-2026
-sec2.fasta  2       11-03-2026
-sec3.fasta  1       11-03-2026
