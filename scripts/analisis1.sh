@@ -5,7 +5,7 @@ archivo="/c/Users/Usuario/Desktop/docu programacion/00 Linux/boot_camp_bioinfo/p
 if [[ $archivo = *.fasta ]]; then
     echo 'archivo bien metido'
 
-    variable=$(grep -n 'ATG' "$archivo" | wc -l) #debo poner las comillas al "$archivo" para que grep lo entienda como una ruta.
+    variable=$(grep -n 'ATG' "$archivo" | wc -l) 
     echo "se han encontrado $variable lineas" > ../results/reports1.txt
     echo "analisis finalizado"
 else
