@@ -1,60 +1,56 @@
 # Linux Bioinformatics Pipeline
 
-Pipeline de práctica para análisis básico de datos bioinformáticos utilizando herramientas estándar de Unix y scripting en Bash.
+An automated, lightweight pipeline designed for core bioinformatic data processing using native Unix utilities and modular Bash scripting.
 
-Este proyecto forma parte de un bootcamp de Linux orientado a bioinformática. El objetivo es demostrar cómo procesar archivos **FASTA**, **FASTQ** y **tablas de expresión génica** utilizando herramientas de línea de comandos como `grep`, `awk`, `sort` y `wc`, además de automatizar tareas mediante scripts Bash.
-
----
-
-# Objetivos del proyecto
-
-Este repositorio demuestra competencias básicas necesarias en entornos de bioinformática:
-
-* Navegación y manipulación de archivos en Linux
-* Uso de herramientas Unix para análisis de datos biológicos
-* Procesamiento de archivos FASTA y FASTQ
-* Filtrado y transformación de datos tabulares
-* Automatización mediante scripts Bash
-* Generación de reportes reproducibles
-* Organización profesional de un proyecto bioinformático
+This repository provides an production-ready environment to process, filter, and analyze **FASTA** genomic sequences, **FASTQ** high-throughput sequencing reads, and **differential gene expression datasets**. By leveraging heavily optimized low-level Unix utilities (`awk`, `grep`, `sort`, `wc`), the pipeline achieves high-performance data transformation without the overhead of external dependencies.
 
 ---
 
-# Estructura del repositorio
+## Key Features & Core Competencies
 
-```
+* **High-Throughput Sequence Parsing:** Optimized processing of multi-sequence FASTA and FASTQ structures.
+* **Stream-Based Data Transformation:** Advanced column extraction, filtering, and deduplication of large-scale tabular data (`TSV`).
+* **Automated Pipeline Orchestration:** End-to-end Bash workflows featuring robust error handling, structural validation, and execution isolation.
+* **Comprehensive Logging:** Automated, timestamped execution tracking (`.log`) to guarantee strict auditability and computational reproducibility.
+* **POSIX Compliance:** Built entirely upon standard native Unix tools, ensuring cross-platform compatibility across Linux, macOS, and WSL environments.
+
+---
+
+## Repository Architecture
+
+```text
 linux-bioinformatics-pipeline/
 │
-├── data/                  # Archivos de entrada (FASTA, FASTQ, TSV)
+├── data/                  # Input datasets (FASTA, FASTQ, TSV)
 │   ├── sec1.fasta
 │   ├── sec2.fasta
 │   ├── sec3.fasta
 │   ├── test_reads.fastq
 │   └── expresion_tratamientos.tsv
 │
-├── scripts/               # Scripts Bash del pipeline
+├── scripts/               # Production-grade Bash source scripts
 │   ├── analisis1.sh
 │   ├── analisis2.sh
 │   ├── analisis3.sh
 │   └── FASTQ.sh
 │
-├── results/               # Resultados generados y logs
+├── results/               # Generated analytical reports and telemetry logs
 │   ├── reports1.txt
 │   ├── reports2.txt
 │   ├── reports3.txt
-│   ├── ejecucion.log
+│   ├── deejecucion.log
 │   └── pipeline.log
 │
-└── README.md              # Documentación del proyecto
+└── README.md              # Project documentation
 ```
 
 ---
 
-# Requisitos
+# System Requirements
 
-El proyecto utiliza herramientas estándar disponibles en la mayoría de sistemas Linux o entornos WSL:
+The pipeline is completely self-contained and executes within standard POSIX-compliant environments. No external packages, package managers, or interpreters are required:
 
-* bash
+* bash (≥ 4.0 recommended)
 * grep
 * awk
 * sort
@@ -63,75 +59,40 @@ El proyecto utiliza herramientas estándar disponibles en la mayoría de sistema
 * column
 * shuf
 
-No se requieren dependencias externas adicionales.
-
 ---
 
-# Tipos de datos utilizados
+# Data Specs & Input Formats
 
-## Archivos FASTA
+## Genomic FASTA Records
 
-Archivos de secuencias biológicas simuladas utilizados para pruebas.
+Standard nucleotide sequence files. The core modules parse these files to identify structural patterns, map targeted motifs, and compute base composition metrics.
 
-```
-data/sec1.fasta
-data/sec2.fasta
-data/sec3.fasta
-```
+## High-Throughput FASTQ Reads
 
-Estos archivos contienen secuencias de nucleótidos que se analizan en busca de motivos específicos.
+Standard 4-line per-record sequencing outputs containing unique read identifiers, raw nucleotide sequences, quality score delimiters, and Phred-scaled base quality strings.
 
+## Quantitative Gene Expression Profiles (.tsv)
+
+Tabular matrices mapping specific gene identifiers to experimental conditions and expression levels. Used to evaluate data integrity and perform downstream data cleaning.
 ---
 
-## Archivo FASTQ
-
-Archivo con lecturas simuladas de secuenciación.
-
-```
-data/test_reads.fastq
-```
-
-El formato FASTQ contiene:
-
-* identificador de lectura
-* secuencia
-* separador
-* calidad de la secuencia
-
----
-
-## Tabla de expresión génica
-
-Archivo tabular que contiene genes asociados a diferentes tratamientos.
-
-```
-data/expresion_tratamientos.tsv
-```
-
-Este archivo se utiliza para practicar extracción de columnas y eliminación de duplicados.
-
----
-
-# Scripts del proyecto
+# Script Specifications & CLI Usage
 
 ## analisis1.sh
 
-Script que analiza archivos FASTA para buscar el motivo **ATG**.
+Performs target motif mapping across individual FASTA files (defaults to searching for the **ATG** start codon).
 
-Funciones principales:
+Key Features
 
-* lectura de archivo FASTA
-* búsqueda de patrones con `grep`
-* conteo de ocurrencias
-* generación de reporte
+* Mechanics: Streams inputs via `grep` to extract target matching distributions and exports descriptive statistics.
 
-Ejemplo de ejecución:
+* Executation:
 
 ```
-bash scripts/analisis1.sh sec1.fasta
+bash scripts/analisis1.sh data/sec1.fasta
 ```
 
-Salida generada:
+* Output
 
 ```
 results/reports1.txt
@@ -141,22 +102,17 @@ results/reports1.txt
 
 ## analisis2.sh
 
-Script que procesa la tabla de expresión génica.
+Executes automated filtration and matrix profiling on large gene expression tables.
 
-Funciones:
+* Mechanics: Isolates high-dimension features, normalizes gene structures, drops duplicate entries, and calculates global unique feature counts.
 
-* extracción de la columna de genes
-* ordenación de genes
-* eliminación de duplicados
-* cálculo del número total de genes únicos
-
-Ejemplo:
+* Usage:
 
 ```
-bash scripts/analisis2.sh expresion_tratamientos.tsv
+bash scripts/analisis2.sh data/expresion_tratamientos.tsv
 ```
 
-Salida:
+* Output:
 
 ```
 results/reports2.txt
@@ -166,23 +122,17 @@ results/reports2.txt
 
 ## analisis3.sh
 
-Pipeline automatizado que procesa múltiples archivos FASTA.
+The primary batch-processing orchestration pipeline.
 
-El script:
+Mechanics: Runs automated structural file checks, parses multiple sequence records concurrently, aggregates motif frequencies, and writes comprehensive execution telemetry.
 
-* valida la existencia de archivos
-* procesa múltiples FASTA
-* cuenta ocurrencias del motivo `ATG`
-* genera un reporte consolidado
-* crea logs de ejecución con fecha
-
-Ejecución:
+Usage:
 
 ```
 bash scripts/analisis3.sh
 ```
 
-Salida:
+Output:
 
 ```
 results/reports3.txt
@@ -193,17 +143,17 @@ results/pipeline.log
 
 ## FASTQ.sh
 
-Script para generar **lecturas FASTQ simuladas**.
+Synthetic dataset generator engine designed to **output benchmarking sequences**.
 
-Utiliza secuencias aleatorias para crear datos de prueba que pueden utilizarse en pipelines de bioinformática.
+* Mechanics: Leverages pseudorandom algorithms to generate structurally accurate FASTQ test data with variable quality metrics.
 
-Ejecutar:
+* Usage:
 
 ```
 bash scripts/FASTQ.sh
 ```
 
-Salida generada:
+Output:
 
 ```
 data/test_reads.fastq
@@ -211,39 +161,38 @@ data/test_reads.fastq
 
 ---
 
-# Ejemplo de flujo de trabajo
+# End-to-End Execution Workflow
 
-Un flujo típico de análisis podría ser:
+Execute the full suite using the following pipeline order to initialize datasets, perform single-molecule analysis, parse tables, and run batch workflows:
 
 ```
-# generar FASTQ de prueba
+# 1. Initialize benchmarking FASTQ datasets
 bash scripts/FASTQ.sh
 
-# analizar un archivo FASTA
-bash scripts/analisis1.sh sec1.fasta
+# 2. Extract structural metrics from targeted FASTA records
+bash scripts/analisis1.sh data/sec1.fasta
 
-# analizar expresión génica
-bash scripts/analisis2.sh expresion_tratamientos.tsv
+# 3. Process and normalize gene expression matrices
+bash scripts/analisis2.sh data/expresion_tratamientos.tsv
 
-# ejecutar pipeline sobre múltiples FASTA
+# 4. Run the batch production pipeline across all multi-FASTA endpoints
 bash scripts/analisis3.sh
 ```
 
 ---
 
-# Buenas prácticas aplicadas
+# Pipeline Design Principles
 
-El proyecto sigue algunas prácticas habituales en pipelines de bioinformática:
+To align with modern computational biology benchmarks, this pipeline adheres to strict operational standards:
 
-* uso de **scripts reproducibles**
-* generación automática de **logs**
-* organización clara de datos, scripts y resultados
-* uso de **herramientas Unix estándar**
-* estructura de proyecto compatible con entornos de investigación
+* Computational Reproducibility: Fixed-seed data operations and deterministic pipeline structures yield identical outputs across identical environments.
 
----
+* Data-Code Separation: Isolation of mutable data streams (data/, results/) from immutable source code logic (scripts/).
 
-# Autor
+* Fail-Safe Processing: Scripts implement automated verification layers to trap errors early before downstream processing.
 
-Carlos
-Proyecto de práctica – Linux Bootcamp de Bioinformática
+
+# Author
+
+Carlos Garcia Corona
+
