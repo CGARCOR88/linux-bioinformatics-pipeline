@@ -1,4 +1,4 @@
-# Linux Bioinformatics Pipeline
+# Bash_Bioinformatic_Tools
 
 An automated, lightweight pipeline designed for core bioinformatic data processing using native Unix utilities and modular Bash scripting.
 
